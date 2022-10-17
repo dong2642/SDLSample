@@ -20,10 +20,12 @@ int SDL_main(int argc, char* argv[])
 	
 
 	int X = 0;
+
+	SDL_Color BackgroundColor = { 0xff, 0, 0, 0 };
 	while (1)
 	{
 		//화면 지우기
-		SDL_SetRenderDrawColor(MyRenderer, 0xff, 0, 0, 0);
+		SDL_SetRenderDrawColor(MyRenderer, BackgroundColor.r, BackgroundColor.g, BackgroundColor.b, BackgroundColor.a);
 		SDL_RenderClear(MyRenderer);
 
 		//사각형 그리기
@@ -34,6 +36,20 @@ int SDL_main(int argc, char* argv[])
 		SDL_SetRenderDrawColor(MyRenderer, 0x00, 0, 0xff, 0);
 		SDL_Rect MyRect = { X++, 100, 100, 100 };
 		SDL_RenderFillRect(MyRenderer, &MyRect);
+
+		// 창 이동
+		SDL_Event MyEvent;
+		SDL_PollEvent(&MyEvent);
+
+		// 창 닫기
+		if (MyEvent.type == SDL_QUIT)
+		{
+			break;
+		}
+		else if (MyEvent.type == SDL_KEYDOWN)
+		{
+			BackgroundColor = { 0xff, 0xff, 0, 0 };
+		}
 
 		//화면에 그리기
 		SDL_RenderPresent(MyRenderer);
